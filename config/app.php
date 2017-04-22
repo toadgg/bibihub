@@ -10,7 +10,7 @@ return [
     | 会用于生成 URL Schema 等.
     |
     */
-    'name' => env('APP_NAME', 'PHPHub'),
+    'name' => env('APP_NAME', 'BibiHub'),
 
     /*
     |--------------------------------------------------------------------------
@@ -178,7 +178,11 @@ return [
         SocialiteProviders\Manager\ServiceProvider::class,
         Overtrue\LaravelFollow\FollowServiceProvider::class,
         Jrean\UserVerification\UserVerificationServiceProvider::class,
+
+        // Mail
         Naux\Mail\SendCloudServiceProvider::class,
+        HyanCat\DirectMail\AliyunDirectMailServiceProvider::class,
+
         Cmgmyr\Messenger\MessengerServiceProvider::class,
         Overtrue\LaravelFilesystem\Qiniu\QiniuStorageServiceProvider::class,
 

@@ -42,7 +42,8 @@
         "nicolaslopezj/searchable": "1.*",
         "hieu-le/active": "^3.4",
         "cmgmyr/messenger": "^2.13",
-        "overtrue/laravel-filesystem-qiniu": "^0.0.1"
+        "overtrue/laravel-filesystem-qiniu": "^0.0.1",
+        "hyancat/aliyun-direct-mail": "dev-master"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

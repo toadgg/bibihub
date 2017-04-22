@@ -11,6 +11,7 @@ use App\Models\NotificationMailLog;
 use Illuminate\Mail\Message;
 use Mail;
 use Naux\Mail\SendCloudTemplate;
+use HyanCat\DirectMail\DirectMailTransport;
 use Jrean\UserVerification\Facades\UserVerification;
 
 class EmailHandler
@@ -67,11 +68,7 @@ class EmailHandler
         $token = $user->verification_token;
         Mail::send('emails.fake', [], function (Message $message) use ($user, $token) {
             $message->subject(lang('Please verify your email address'));
-
-            $message->getSwiftMessage()->setBody(new SendCloudTemplate('template_active', [
-                'name' => $user->name,
-                'url'  => url('verification', $user->verification_token).'?email='.urlencode($user->email),
-            ]));
+            $message->getSwiftMessage()->setBody("测试");
             $message->to($user->email);
         });
     }
