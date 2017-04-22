@@ -1,4 +1,4 @@
-<?php namespace Bibihub\Core;
+<?php namespace Phphub\Core;
 
 interface CreatorListener
 {
