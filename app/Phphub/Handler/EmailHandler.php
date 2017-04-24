@@ -11,7 +11,6 @@ use App\Models\NotificationMailLog;
 use Illuminate\Mail\Message;
 use Mail;
 use Naux\Mail\SendCloudTemplate;
-use HyanCat\DirectMail\DirectMailTransport;
 use Jrean\UserVerification\Facades\UserVerification;
 
 class EmailHandler
@@ -68,7 +67,13 @@ class EmailHandler
         $token = $user->verification_token;
         Mail::send('emails.fake', [], function (Message $message) use ($user, $token) {
             $message->subject(lang('Please verify your email address'));
-            $message->getSwiftMessage()->setBody("测试");
+            ;
+            $message->getSwiftMessage()->setBody(
+                view('emails.auth.active', [
+                    'name' => $user->name,
+                    'url'  => url('verification', $user->verification_token).'?email='.urlencode($user->email),
+                ])->render()
+            );
             $message->to($user->email);
         });
     }
@@ -81,7 +86,7 @@ class EmailHandler
             || $toUser->id == $fromUser->id             // 发件和收件是同一个人
             || !$toUser->email                          // 不存在邮件
             || $toUser->verified != 1                   // 还未验证
-            || $this->_checkNecessary($type, $toUser)   // 因延迟触发的，用户可能已读过站内通知
+            //|| $this->_checkNecessary($type, $toUser)   // 因延迟触发的，用户可能已读过站内通知
         ) {
             return false;
         }
@@ -199,11 +204,11 @@ class EmailHandler
 
             $message->subject($subject);
 
-            $message->getSwiftMessage()->setBody(new SendCloudTemplate('notification_mail', [
+            $message->getSwiftMessage()->setBody(view('emails.notice', [
                 'name'     => $name,
                 'action'   => $action,
                 'content'  => $content,
-            ]));
+            ])->render());
 
             $message->to($this->toUser->email);
             $this->generateMailLog($mailog);
